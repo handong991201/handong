@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/handong991201/picture/img/美丽的天空.jpg">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/handong991201/picture/img/美丽的天空.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="handong">
+  <meta name="keywords" content="">
+  
+  <title>R语言基本数据结构 - 寒冬</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark-reasonable.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/gundongtiao.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"handong991201.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>handong</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/handong991201/picture/img/1602750730545.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="R语言基本数据结构">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-16 21:01" pubdate>
+        2021年6月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">R语言基本数据结构</h1>
+            
+            <div class="markdown-body">
+              <h2 id="R语言基本数据结构"><a href="#R语言基本数据结构" class="headerlink" title="R语言基本数据结构"></a>R语言基本数据结构</h2><h3 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h3><ul>
+<li><p>建立：</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">a &lt;- <span class="hljs-built_in">c</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)			    <span class="hljs-comment"># c:collection</span><br>a = <span class="hljs-built_in">c</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)<br><span class="hljs-built_in">c</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>) -&gt; a<br>assign(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-built_in">c</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>))<br>seq(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>,<span class="hljs-built_in">length</span> = <span class="hljs-number">5</span>)		<span class="hljs-comment"># 输出5个数成等差数列，与matlab的linspace相似</span><br>seq(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>,by = <span class="hljs-number">8</span>)		 	<span class="hljs-comment"># 步长为8,by=可省略</span><br><span class="hljs-built_in">rep</span>(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>,<span class="hljs-number">3</span>)					<span class="hljs-comment"># 1,2,3  这个序列重复三次，结果：1 2 3 1 2 3 1 2 3</span><br><span class="hljs-built_in">rep</span>(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>,<span class="hljs-built_in">rep</span>(<span class="hljs-number">3</span>,<span class="hljs-number">3</span>))			<span class="hljs-comment"># rep(3,3)的结果为3，3，3	结果：1 1 1 2 2 2 3 3 3，注：1：3的长度要与最后一个3对应</span><br><span class="hljs-built_in">rep</span>(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>,each = <span class="hljs-number">3</span>)		    <span class="hljs-comment"># 结果等于上一个</span><br>sequence(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)			<span class="hljs-comment"># 1：3 = 1，2，3	第二个1是指从1开始，最后一个1是指步长，有多少个数是看第一个参数的，结果 1 1 2 1 2 3</span><br>						   <span class="hljs-comment"># 1      上面这个1说明只有一个数</span><br>						   <span class="hljs-comment"># 1 2 	  上面这个2说明有两个数</span><br>						   <span class="hljs-comment"># 1 2 3        上面这个3说明有三个数</span><br>sequence(<span class="hljs-built_in">c</span>(<span class="hljs-number">9</span>,<span class="hljs-number">3</span>),from = <span class="hljs-built_in">c</span>(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>),by = <span class="hljs-built_in">c</span>(<span class="hljs-number">3</span>,<span class="hljs-number">1</span>))	<span class="hljs-comment"># 首先开头的序列有9个数，起点为5，步长为3，第二个序列起点为2，步长为1</span><br>							<span class="hljs-comment"># 结果：5  8 11 14 17 20 23 26 29  2  3  4</span><br>							<span class="hljs-comment"># 第一个序列：5  8 11 14 17 20 23 26 29</span><br>							<span class="hljs-comment"># 第二个序列：2  3  4</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>运算：</p>
+<blockquote>
+<p>索引用  [  ]  ，用法跟matlab与python类似，可以在中括号内输入一个数组，取出多个值</p>
+<p>加减运算</p>
+<p>内积运算 %*%（矩阵乘法也用这个）</p>
+<p>mean，sum，sqrt 等函数都支持向量</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h3><ul>
+<li><p>建立</p>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">m = matrix(<span class="hljs-number">1</span>:<span class="hljs-number">9</span>,nrow = <span class="hljs-number">3</span>,ncol = <span class="hljs-number">3</span>,byrow = <span class="hljs-literal">TRUE</span>,<span class="hljs-built_in">dimnames</span> = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;r1&#x27;</span>,<span class="hljs-string">&#x27;r2&#x27;</span>,<span class="hljs-string">&#x27;r3&#x27;</span>),<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;c1&#x27;</span>,<span class="hljs-string">&#x27;c2&#x27;</span>,<span class="hljs-string">&#x27;c3&#x27;</span>)))	<br><span class="hljs-comment"># R语言当中矩阵输入默认是按列的，可通过byrow参数修改，dimnames定义列名，行名，必须是一个列表类型</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p>运算</p>
+<blockquote>
+<p>索引与其他语言类似，如果定义了列（行）名，也可以通过列（行）名来索引</p>
+<p>solver命令可以用来求逆矩阵</p>
+<p>特征值和特征向量</p>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">eigen(m)	<span class="hljs-comment"># 默认会同时输出特征值和特征向量</span><br>eigen(m)$values	<span class="hljs-comment"># 加上$values只输出特征值，$:这个是别的编程语言没有接触过的</span><br></code></pre></div></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">t(m)	<span class="hljs-comment"># 转置</span><br></code></pre></div></td></tr></table></figure>
+
+<p>加减乘除都是对应元素位置相运算</p>
+<p>合并和拼接操作：</p>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">cbind(a,b)	<span class="hljs-comment"># 列合并</span><br>rbind(a,b)	<span class="hljs-comment"># 行合并</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+</ul>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ul>
+<li><p>数组建立（三维）：</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">array(<span class="hljs-number">1</span>:<span class="hljs-number">24</span>,<span class="hljs-built_in">c</span>(<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>))	<span class="hljs-comment"># 1:24为数据，2 为行数，3 为列数，4 为层数</span><br><span class="hljs-comment"># , , 1</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># [,1] [,2] [,3]</span><br><span class="hljs-comment"># [1,]    1    3    5</span><br><span class="hljs-comment"># [2,]    2    4    6</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># , , 2</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># [,1] [,2] [,3]</span><br><span class="hljs-comment"># [1,]    7    9   11</span><br><span class="hljs-comment"># [2,]    8   10   12</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># , , 3</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># [,1] [,2] [,3]</span><br><span class="hljs-comment"># [1,]   13   15   17</span><br><span class="hljs-comment"># [2,]   14   16   18</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># , , 4</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># [,1] [,2] [,3]</span><br><span class="hljs-comment"># [1,]   19   21   23</span><br><span class="hljs-comment"># [2,]   20   22   24</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+</ul>
+<h3 id="数据框"><a href="#数据框" class="headerlink" title="数据框"></a>数据框</h3><ul>
+<li><p>通过转换列表的形式建立数据框</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">list_1&lt;-<span class="hljs-built_in">list</span>(name = <span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;y1&#x27;</span>,<span class="hljs-string">&#x27;y2&#x27;</span>,<span class="hljs-string">&#x27;y3&#x27;</span>),age = <span class="hljs-built_in">c</span>(<span class="hljs-number">11</span>,<span class="hljs-number">22</span>,<span class="hljs-number">33</span>))	<span class="hljs-comment"># name、age 即为列名，</span><br>data.frame(list_1)<br><span class="hljs-comment">#           name age</span><br><span class="hljs-comment">#        1   y1  11</span><br><span class="hljs-comment">#        2   y2  22</span><br><span class="hljs-comment">#        3   y3  33</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>数据框的建立</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">no&lt;-<span class="hljs-number">1</span>:<span class="hljs-number">3</span><br>name&lt;-<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;n1&#x27;</span>,<span class="hljs-string">&#x27;n2&#x27;</span>,<span class="hljs-string">&#x27;n3&#x27;</span>)<br>score&lt;-<span class="hljs-number">77</span>:<span class="hljs-number">79</span><br>df = data.frame(no,name,score,row.names = <span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>))	<span class="hljs-comment"># 可以通过row.names设置行名</span><br><span class="hljs-comment">#      no name score</span><br><span class="hljs-comment">#    a  1   n1    77</span><br><span class="hljs-comment">#    b  2   n2    78</span><br><span class="hljs-comment">#    c  3   n3    79</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>索引</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R"><span class="hljs-comment"># 选取行</span><br>df[<span class="hljs-string">&#x27;a&#x27;</span>,]	<span class="hljs-comment"># 设置了行名，可以直接通过行名进行选取(列选取同理)，等价于df[1,]</span><br>df[<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>),<span class="hljs-built_in">c</span>(<span class="hljs-string">&#x27;no&#x27;</span>,<span class="hljs-string">&#x27;score&#x27;</span>)]<br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+</ul>
+<h3 id="时间和日期"><a href="#时间和日期" class="headerlink" title="时间和日期"></a>时间和日期</h3><ul>
+<li><p>日期对象</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">now = as.Date(<span class="hljs-string">&quot;2021-03-19&quot;</span>)		<span class="hljs-comment"># as.Date() 将其他对象转换为日期对象</span><br><span class="hljs-comment"># &gt; now</span><br><span class="hljs-comment"># [1] &quot;2021-03-19&quot;</span><br><span class="hljs-built_in">unclass</span>(now)<br><span class="hljs-comment"># [1] 18705						# 计算now距离1970-01-01多少天</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>时间对象</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">now = Sys.time()			<span class="hljs-comment"># 获取当前系统时间</span><br>t = as.POSIXlt(now)			<span class="hljs-comment"># 将其转化为R中的时间格式</span><br><span class="hljs-comment">#    &gt; t</span><br><span class="hljs-comment">#    [1] &quot;2021-03-19 14:59:19 CST&quot;</span><br><span class="hljs-built_in">names</span>(<span class="hljs-built_in">unclass</span>(t))			<span class="hljs-comment"># 输出R中的时间包含了哪些值，unclass(t) 输出的是什么呢？？？</span><br><span class="hljs-comment">#    [1] &quot;sec&quot;    &quot;min&quot;    &quot;hour&quot;   &quot;mday&quot;   &quot;mon&quot;    &quot;year&quot;   &quot;wday&quot;   &quot;yday&quot;  </span><br><span class="hljs-comment">#    [9] &quot;isdst&quot;  &quot;zone&quot;   &quot;gmtoff&quot;</span><br>t$<span class="hljs-string">&#x27;min&#x27;</span>						<span class="hljs-comment"># 取分钟的值</span><br><span class="hljs-comment">#	 [1] 59</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>日期转时间</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">date = as.Date(<span class="hljs-string">&#x27;2021-01-01&#x27;</span>)	<span class="hljs-comment"># 创建一个日期</span><br>t = as.POSIXlt(date)<br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>时间格式化</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">y &lt;-strptime(<span class="hljs-string">&quot;2006-01-08 10:07:52&quot;</span>, <span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-comment">#    &gt; y</span><br><span class="hljs-comment">#    [1] &quot;2006-01-08 10:07:52 CST&quot;</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+<li><p>时间计算</p>
+<blockquote>
+<figure class="highlight r"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs R">x = as.Date(<span class="hljs-string">&quot;2021-02-01&quot;</span>)<br>y = as.Date(<span class="hljs-string">&quot;2021-03-19&quot;</span>)<br>y-x<br><span class="hljs-comment"># Time difference of 46 days</span><br>y+<span class="hljs-number">1</span><br><span class="hljs-comment"># [1] &quot;2021-03-20&quot;</span><br></code></pre></div></td></tr></table></figure></blockquote>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/R%E8%AF%AD%E8%A8%80/">R语言</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/19/SQL%E7%BB%83%E4%B9%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SQL练习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/16/%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90/">
+                        <span class="hidden-mobile">聚类分析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=498040739&auto=0&height=66"></iframe>
+	
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+  <div>
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("06/06/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+      document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+  }  //此次自定义显示内容
+  setInterval("createtime()",250);
+  </script>
+</div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/caidai.js"></script>
+<script src="/js/love.js"></script>
+<script src="/js/xiaoxingxing.js"></script>
+<script src="/js/snow.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
